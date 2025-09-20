@@ -7,7 +7,6 @@ export default function Countries(){
 
     const [data, setData] = useState([])
     const [searchInput, setSearchInput] = useState(' ')
-    const [region, setRegion] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
@@ -29,18 +28,15 @@ export default function Countries(){
     }
 
     useEffect(() => {
-        getData(`name/${searchInput}`)
+        if (searchInput != ""){
+            getData(`name/${searchInput}`)
+        }
     }, [searchInput])
 
-    useEffect(() => {
-        setData(data.filter((item) => item.region.toLowerCase() === region.toLowerCase()))
-    }, [region])
 
     useEffect(() => {
         getData('all')
     }, [])
-
-
 
     return(
         <>
@@ -49,7 +45,7 @@ export default function Countries(){
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">Countries</h2>
                 <div className="flex flex-col sm:flex-row gap-4 mb-6">
                     <input onChange={(e) => setSearchInput(e.target.value)} value={searchInput}  placeholder="Search by name..." className="border border-gray-300 rounded px-3 py-2 w-full sm:w-1/2 focus:outline-none focus:border-blue-500" type="text" />
-                    <select onChange={(e) => setRegion(e.target.value)} value={region} className="border border-gray-300 rounded px-3 py-2 w-full sm:w-1/2 focus:outline-none focus:border-blue-500">
+                    <select className="border border-gray-300 rounded px-3 py-2 w-full sm:w-1/2 focus:outline-none focus:border-blue-500">
                         <option value="">All Regions</option>
                         <option value="africa">Africa</option>
                         <option value="americas">Americas</option>
